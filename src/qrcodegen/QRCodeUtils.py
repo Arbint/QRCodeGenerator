@@ -1,6 +1,8 @@
 import qrcode
+from PIL import Image, ImageOps
+import math
 
-def GenerateQrCode(savePath, url):
+def GenerateQrCode(savePath, url, iconPath = None):
     print(f"saving qrcode of {url} to {savePath}")
     # # Create a QR code object
     qr = qrcode.QRCode(
@@ -18,19 +20,15 @@ def GenerateQrCode(savePath, url):
     qrCodeImg = qr.make_image(fill="black", back_color="white").convert("RGB")
 
     # # Find and attach Icon
-    # iconPath = GetIconWithName(codeFileName)
-    # if not iconPath:
-    #     iconPath = GetDefaultIconPath()
-
-    # if iconPath:
-    #     qrCodeCenterIcon = Image.open(iconPath)
-    #     borderSize = 40
-    #     qrCodeCenterIcon = ImageOps.expand(qrCodeCenterIcon, border=borderSize, fill=GetQRCodeIconColorForName(codeFileName))
-    #     qrWidth, qrHeight = qrCodeImg.size
-    #     iconSize = qrWidth//4
-    #     qrCodeCenterIcon = qrCodeCenterIcon.resize((iconSize, iconSize), Image.Resampling.LANCZOS)
-    #     iconPos = ((qrWidth - iconSize)//2, (qrHeight - iconSize)//2)
-    #     qrCodeImg.paste(qrCodeCenterIcon, iconPos, mask = qrCodeCenterIcon)
+    if iconPath:
+        qrCodeCenterIcon = Image.open(iconPath)
+        borderSize = 40
+        qrCodeCenterIcon = ImageOps.expand(qrCodeCenterIcon, border=borderSize)
+        qrWidth, qrHeight = qrCodeImg.size
+        iconSize = qrWidth//4
+        qrCodeCenterIcon = qrCodeCenterIcon.resize((iconSize, iconSize), Image.Resampling.LANCZOS)
+        iconPos = ((qrWidth - iconSize)//2, (qrHeight - iconSize)//2)
+        qrCodeImg.paste(qrCodeCenterIcon, iconPos, mask = qrCodeCenterIcon)
 
     # Save the image file
     qrCodeImg.save(savePath)

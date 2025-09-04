@@ -1,7 +1,7 @@
 # Simple App to Generate QR Code From a Given URL
 ![Label](https://img.shields.io/badge/Python-3.13-blue)
 ------
-<img src="assets/doc/screenshot.png" width=300>
+<img src="assets/doc/screenshot.png" width=500>
 
 ## Test Run
 
