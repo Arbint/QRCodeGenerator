@@ -1,0 +1,32 @@
+[project]
+name = "qrcodegen"
+version = "0.1.0"
+description = "generate qrCode from URL"
+authors = [
+    {name = "Jingtian Li"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "qrcode (>=8.2,<9.0)",
+    "pillow (>=11.3.0,<12.0.0)",
+    "pyside6 (>=6.9.2,<7.0.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry]
+packages=[
+    {include="qrcodegen", from="src"}
+]
+
+[tool.poetry.scripts]
+qrCodeGen = "qrcodegen.app:main"
+qrCodeGenGUI = "qrcodegen.app:mainGUI"
+
+[tool.poetyr.group.dev.dependencies]
+pyinstaller = "^6.0"

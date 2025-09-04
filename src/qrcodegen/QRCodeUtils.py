@@ -1,0 +1,36 @@
+import qrcode
+
+def GenerateQrCode(savePath, url):
+    print(f"saving qrcode of {url} to {savePath}")
+    # # Create a QR code object
+    qr = qrcode.QRCode(
+        version=2,  # controls the size of the QR Code (1 is the smallest)
+        error_correction=qrcode.constants.ERROR_CORRECT_H,  # controls error correction
+        box_size=40,  # size of the box where QR code will be displayed
+        border=4,  # border size around the QR code
+    )
+
+    # Add data to the QR code
+    qr.add_data(url)
+    qr.make(fit=True)
+
+    # Create an image from the QR code
+    qrCodeImg = qr.make_image(fill="black", back_color="white").convert("RGB")
+
+    # # Find and attach Icon
+    # iconPath = GetIconWithName(codeFileName)
+    # if not iconPath:
+    #     iconPath = GetDefaultIconPath()
+
+    # if iconPath:
+    #     qrCodeCenterIcon = Image.open(iconPath)
+    #     borderSize = 40
+    #     qrCodeCenterIcon = ImageOps.expand(qrCodeCenterIcon, border=borderSize, fill=GetQRCodeIconColorForName(codeFileName))
+    #     qrWidth, qrHeight = qrCodeImg.size
+    #     iconSize = qrWidth//4
+    #     qrCodeCenterIcon = qrCodeCenterIcon.resize((iconSize, iconSize), Image.Resampling.LANCZOS)
+    #     iconPos = ((qrWidth - iconSize)//2, (qrHeight - iconSize)//2)
+    #     qrCodeImg.paste(qrCodeCenterIcon, iconPos, mask = qrCodeCenterIcon)
+
+    # Save the image file
+    qrCodeImg.save(savePath)
