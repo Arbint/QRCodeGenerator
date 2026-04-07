@@ -2,11 +2,11 @@ import qrcode
 from PIL import Image, ImageOps
 import math
 
-def GenerateQrCode(savePath, url, iconPath=None, borderColor=(255, 255, 255, 255)):
+def GenerateQrCode(savePath, url, iconPath=None, borderColor=(255, 255, 255, 255), version=1):
     print(f"saving qrcode of {url} to {savePath}")
     # # Create a QR code object
     qr = qrcode.QRCode(
-        version=2,  # controls the size of the QR Code (1 is the smallest)
+        version=version,  # 1–40; with fit=True this is the minimum version used
         error_correction=qrcode.constants.ERROR_CORRECT_H,  # controls error correction
         box_size=40,  # size of the box where QR code will be displayed
         border=4,  # border size around the QR code

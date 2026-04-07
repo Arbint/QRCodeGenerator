@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QFileDialog, QHBoxLayout, QVBoxLayout, QLabel
+from PySide6.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QFileDialog, QHBoxLayout, QVBoxLayout, QLabel, QSpinBox
 from qrcodegen.QRCodeUtils import GenerateQrCode
 import os
 
@@ -16,6 +16,16 @@ class QRCodeWidget(QWidget):
         iconPickBtn = QPushButton("Pick Center Icon")
         iconPickBtn.clicked.connect(self.IconPickBtnClicked)
         configLayout.addWidget(iconPickBtn)
+
+        versionLayout = QHBoxLayout()
+        self.masterLayout.addLayout(versionLayout)
+        versionLayout.addWidget(QLabel("Version (1=smallest, 40=largest):"))
+        self.versionSpinBox = QSpinBox()
+        self.versionSpinBox.setRange(1, 40)
+        self.versionSpinBox.setValue(1)
+        self.versionSpinBox.setToolTip("Controls QR code density. Version 1 = auto (smallest that fits). Higher versions add more modules.")
+        versionLayout.addWidget(self.versionSpinBox)
+        versionLayout.addStretch()
 
         createButton = QPushButton("Create")
         createButton.clicked.connect(self.CreateButtonClicked)
@@ -35,7 +45,7 @@ class QRCodeWidget(QWidget):
     def CreateButtonClicked(self):
         url:str = self.URLLineEdit.text()
         destination = QFileDialog.getSaveFileName(self, "Save File", "", self.imageFileDialogFilter)
-        GenerateQrCode(destination[0], url, self.iconPath)
+        GenerateQrCode(destination[0], url, self.iconPath, version=self.versionSpinBox.value())
 
 
 def RunGUI():
